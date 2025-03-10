@@ -1,4 +1,5 @@
 import os
+import json
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -34,7 +35,8 @@ class Plot(Resource):
             "message": ""
         }
         try:
-            plot_data = data.get("plot_description", {})
+            plot_description_str = data.get("plot_description", "{}")
+            plot_data = json.loads(plot_description_str)
             x_values = plot_data["x_axis"].get("values", [])
             y_values = plot_data["y_axis"].get("values", [])
             num_paths = len(y_values)
