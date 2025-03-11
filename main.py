@@ -22,6 +22,18 @@ cors = CORS(application)
 api = Api(application)
 
 
+def git_commit(file_path):
+    try:
+        repo_dir = os.getcwd()
+        subprocess.run(["git", "add", file_path], cwd=repo_dir, check=True)
+        commit_message = f"Auto-commit: Updated {file_path}"
+        subprocess.run(["git", "commit", "-m", commit_message], cwd=repo_dir, check=True)
+        subprocess.run(["git", "push", "origin", "master"], cwd=repo_dir, check=True)
+        print(f"Successfully pushed {file_path} to master.")
+    except subprocess.CalledProcessError as e:
+        print(f"Git error: {e}")
+
+
 class Index(Resource):
     def get(self):
         return "Hello World"
@@ -53,6 +65,7 @@ class Plot(Resource):
             plot_path = os.path.join(PLOT_DIR, file_name)
             plt.savefig(plot_path)
             plt.close()
+            git_commit(plot_path)
             full_url = request.host_url + "plots/" + file_name
             response["url"] = full_url
         except Exception as e:
