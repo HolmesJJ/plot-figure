@@ -2,6 +2,7 @@ import os
 import json
 import matplotlib
 matplotlib.use('Agg')
+import subprocess
 import matplotlib.pyplot as plt
 
 from flask import Flask
