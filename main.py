@@ -26,6 +26,8 @@ api = Api(application)
 def git_commit(file_path):
     try:
         repo_dir = os.getcwd()
+        subprocess.run(["git", "config", "--global", "user.email", "hujiajun19961024@gmail.com"], cwd=repo_dir, check=True)
+        subprocess.run(["git", "config", "--global", "user.name", "holmesjj"], cwd=repo_dir, check=True)
         subprocess.run(["git", "add", file_path], cwd=repo_dir, check=True)
         commit_message = f"Auto-commit: Updated {file_path}"
         subprocess.run(["git", "commit", "-m", commit_message], cwd=repo_dir, check=True)
